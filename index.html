@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitLogic Pro V2 - Dashboard Edukatif</title>
+<style>
+
+:root{ --primary:#ff4b0b; --primary2:#ff7a1a; --bg:#f4f5f7; --surface:#ffffff; --text:#171717; --muted:#667085; --border:#e4e7ec; --soft:#fff3ed; --green:#16a34a; --blue:#0b74de; --yellow:#f59e0b; --red:#e11d48; --purple:#7c3aed; --dark:#1f2937; --shadow:0 10px 28px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,Arial,Helvetica,sans-serif;
+}
+button,input,select{font-family:inherit}
+.topbar{ height:68px; background:#fff; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 8%; position:sticky; top:0; z-index:20;
+}
+.logo{ color:var(--primary); font-size:26px; font-weight:1000; letter-spacing:-.5px;
+}
+.nav{ display:flex; gap:10px; align-items:center;
+}
+.nav button{ border:0; background:transparent; color:#1f2937; font-weight:850; padding:11px 18px; border-radius:999px; cursor:pointer;
+}
+.nav button.active,.nav button:hover{ background:var(--primary); color:#fff;
+}
+.page{ display:none; min-height:calc(100vh - 68px); padding:48px 8%;
+}
+.page.active{display:block}
+.center{text-align:center}
+h1{ font-size:44px; letter-spacing:-1.1px; margin:0 0 12px;
+}
+h2{ font-size:26px; letter-spacing:-.6px; margin:0 0 12px;
+}
+h3{ margin:0 0 8px; font-size:18px;
+}
+p{line-height:1.65}
+.sub{ max-width:780px; margin:0 auto 34px; color:var(--muted); font-size:17px;
+}
+.grid{display:grid;gap:22px}
+.grid-2{grid-template-columns:2fr 1fr}
+.grid-2-even{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{ background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:28px; box-shadow:0 1px 2px rgba(16,24,40,.03);
+}
+.shadow{box-shadow:var(--shadow)}
+.hero{ display:grid; grid-template-columns:1fr 1.15fr 1fr; min-height:640px; background:#fff; border-bottom:1px solid var(--border);
+}
+.hero-img{ min-height:640px; background-size:cover; background-position:center;
+}
+.hero-mid{ display:flex; align-items:center; justify-content:center; text-align:center; padding:42px;
+}
+.badge{ display:inline-flex; gap:7px; align-items:center; background:var(--soft); color:var(--primary); padding:8px 14px; border-radius:999px; font-weight:1000; font-size:12px; letter-spacing:.08em;
+}
+.hero h1{ font-size:58px; margin:18px 0;
+}
+.btn{ border:0; cursor:pointer; background:var(--primary); color:#fff; padding:15px 26px; border-radius:999px; font-size:15px; font-weight:950;
+}
+.btn:hover{filter:brightness(.98)}
+.btn.secondary{ background:#fff; border:2px solid var(--primary); color:var(--primary);
+}
+.btn.ghost{ color:#334155; background:#fff; border:1px solid var(--border);
+}
+.btn.full{width:100%;margin-top:16px}
+.quick-cards{ width:235px; display:grid; gap:12px; margin:34px auto 0;
+}
+.quick-cards .mini{ background:#fff; border:1px solid var(--border); border-radius:15px; padding:18px;
+}
+.feature{min-height:205px}
+.feature .icon{ color:var(--primary); font-size:34px; margin-bottom:20px;
+}
+label{ display:block; margin:22px 0 9px; font-weight:950; font-size:14px;
+}
+.input-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px;
+}
+input,select{ width:100%; height:56px; border:1px solid var(--border); border-radius:13px; background:#fff; color:var(--text); padding:0 16px; font-size:16px; outline:none;
+}
+input:focus,select:focus{ border-color:var(--primary); box-shadow:0 0 0 4px rgba(255,75,11,.12);
+}
+.help{ color:var(--muted); font-size:13.5px; line-height:1.65;
+}
+.gender-row,.intensity-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px;
+}
+.option{ border:1px solid var(--border); background:#fff; border-radius:15px; padding:18px; text-align:center; cursor:pointer; min-height:92px;
+}
+.option:hover{border-color:var(--primary)}
+.option.active{ background:var(--soft); border:2px solid var(--primary);
+}
+.option .bigicon{ color:var(--primary); font-size:24px; margin-bottom:7px;
+}
+.option small{ display:block; margin-top:5px; color:var(--muted); font-weight:700;
+}
+.sidebox{margin-bottom:18px} .mini-table{ width:100%; border-collapse:collapse; margin-top:10px; background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden;
+}
+.mini-table th,.mini-table td{ padding:12px; border-bottom:1px solid var(--border); text-align:left; font-size:13px;
+}
+.mini-table th{ background:#fafafa; color:var(--muted); font-weight:1000; text-transform:uppercase;
+}
+.mini-table tr:last-child td{border-bottom:0} .formula{ background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:14px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; line-height:1.7;
+}
+.rowline{ display:flex; justify-content:space-between; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--border);
+}
+.rowline:last-child{border-bottom:0}
+.pill{ display:inline-block; padding:7px 12px; border-radius:999px; font-size:12px; font-weight:950;
+}
+.green{background:#e8f7ed;color:var(--green)}
+.blue{background:#eaf3ff;color:var(--blue)}
+.yellow{background:#fff7d6;color:#a16207}
+.red{background:#ffe8ef;color:var(--red)}
+.orange{background:#fff0ea;color:var(--primary)}
+.purple{background:#f1e8ff;color:var(--purple)}
+.dark{background:#eef2f7;color:#334155}
+.result-hero{ background:linear-gradient(135deg,var(--primary),#e85f2e); color:#fff; border-radius:24px; padding:34px; display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; box-shadow:var(--shadow);
+}
+.result-hero .username{ font-size:24px; font-weight:1000;
+}
+.result-hero .goal{ margin-top:10px; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.25); color:#fff;
+}
+.result-hero .calories{ font-size:52px; font-weight:1000; line-height:.95; text-align:right;
+}
+.metric{min-height:176px}
+.metric .label{ text-transform:uppercase; color:var(--muted); font-size:12px; font-weight:1000;
+}
+.metric .value{ font-size:34px; font-weight:1000; margin:7px 0 0;
+}
+.metric .unit{ color:var(--muted); font-size:12px; font-weight:750;
+}
+.metric .desc{ border-top:1px solid var(--border); margin-top:16px; padding-top:13px; color:var(--muted); font-size:13px; line-height:1.55;
+}
+.alert{ border-radius:15px; padding:16px 18px; margin:0 0 20px; background:#fff7f8; border:1px solid #fecdd3; border-left:5px solid var(--red); color:#651223;
+}
+.alert.ok{ background:#f3fbf5; border-color:#bbf7d0; border-left-color:var(--green); color:#064e1f;
+}
+.alert.warn{ background:#fffbeb; border-color:#fde68a; border-left-color:var(--yellow); color:#6d4100;
+}
+.alert b{display:block;margin-bottom:4px}
+.score-card{text-align:center}
+.score-ring{ --score:0; --color:var(--blue); width:136px; height:136px; margin:18px auto; border-radius:50%; background:conic-gradient(var(--color) calc(var(--score)*1%), #edf2f7 0); display:grid; place-items:center;
+}
+.score-inner{ width:98px; height:98px; border-radius:50%; background:#fff; display:grid; place-items:center; font-size:30px; font-weight:1000;
+}
+.reason{ margin:10px 0; border-radius:12px; padding:13px 15px; font-size:14px; line-height:1.55; background:#fff7f2; border-left:4px solid var(--primary);
+}
+.reason.good{background:#f2fbf5;border-left-color:var(--green)}
+.reason.bad{background:#fff7f8;border-left-color:var(--red)}
+.simple-box{ background:#fafafa; border:1px solid var(--border); border-radius:16px; padding:18px;
+}
+.simple-box b{display:block;margin-bottom:6px}
+.macro-row{margin:18px 0}
+.macro-top{ display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; font-weight:950;
+}
+.bar{ height:11px; background:#eef0f3; border-radius:999px; overflow:hidden;
+}
+.fill{height:100%;border-radius:999px}
+.fill.green{background:var(--green)}
+.fill.orange{background:var(--primary)}
+.fill.purple{background:var(--purple)}
+.fill.blue{background:var(--blue)}
+.fill.yellow{background:var(--yellow)}
+.macro-edu{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:18px;
+}
+.macro-card{ border:1px solid var(--border); border-radius:16px; padding:17px; background:#fcfcfd;
+}
+.macro-card h3{display:flex;gap:8px;align-items:center}
+.menu-card{ background:#fafafa; border:1px solid var(--border); border-radius:15px; padding:18px; line-height:1.6; min-height:185px;
+}
+.menu-card .kcal{ float:right; background:var(--soft); color:var(--primary); border-radius:999px; padding:5px 9px; font-weight:950; font-size:12px;
+}
+.plan-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+}
+.plan-card{ background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px; text-align:center;
+}
+.plan-card .num{ font-size:28px; font-weight:1000;
+}
+.svgbox{ width:100%; height:320px; border:1px solid var(--border); border-radius:18px; background:linear-gradient(180deg,#fff,#fbfcfd); overflow:hidden;
+}
+.chart-title-row{ display:flex; justify-content:space-between; align-items:start; gap:14px; margin-bottom:14px;
+}
+.stat-strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px;
+}
+.stat{ background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px;
+}
+.stat small{ display:block; color:var(--muted); text-transform:uppercase; font-weight:950; margin-bottom:8px;
+}
+.stat b{ font-size:22px;
+}
+.progress-track{ height:14px; background:#eef0f3; border-radius:999px; overflow:hidden; margin:14px 0 8px;
+}
+.timeline{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:14px;
+}
+.step{ background:#fff; border:1px solid var(--border); border-radius:16px; padding:15px;
+}
+.step .week{ font-weight:950; color:var(--primary); margin-bottom:6px;
+}
+.checklist{ display:grid; gap:12px;
+}
+.checkitem{ display:flex; gap:12px; background:#fafafa; border:1px solid var(--border); border-radius:14px; padding:14px; align-items:flex-start;
+}
+.checkitem .check{ color:var(--green); font-weight:1000;
+}
+.small-note{ font-size:12.5px; color:var(--muted);
+}
+.journal{margin-top:22px}
+.journal-form{ display:grid; grid-template-columns:1fr 1fr auto; align-items:end; gap:14px; background:#fafafa; border:1px solid var(--border); border-radius:16px; padding:18px;
+}
+table{ width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-top:20px;
+}
+th,td{ padding:14px; border-bottom:1px solid var(--border); font-size:14px; text-align:left;
+}
+th{ background:#fafafa; color:var(--muted); font-weight:1000; text-transform:uppercase; font-size:12px;
+}
+.delete{ border:0; background:#ffe8ef; color:var(--red); border-radius:9px; padding:7px 10px; font-weight:950; cursor:pointer;
+}
+.gloss-card{min-height:210px}
+.gloss-card h3{color:var(--primary)}
+.footer{ text-align:center; padding:34px 8%; background:#fff; border-top:1px solid var(--border); color:var(--muted);
+}
+.noresult{ text-align:center; max-width:720px; margin:30px auto;
+}
+@media(max-width:1050px){ .topbar{padding:0 4%;overflow-x:auto} .nav{gap:4px} .nav button{padding:9px 12px;font-size:13px} .page{padding:34px 4%} .grid-2,.grid-2-even,.grid-3,.grid-4,.macro-edu,.plan-grid,.stat-strip,.timeline{grid-template-columns:1fr} .hero{grid-template-columns:1fr} .hero-img{display:none} .result-hero{display:block} .result-hero .calories{text-align:left;margin-top:22px} .journal-form,.input-row,.gender-row,.intensity-row{grid-template-columns:1fr} .svgbox{height:260px}
+}
+
+</style>
+</head>
+<body>
+
+<header class="topbar"><div class="logo">FitLogic</div><div class="nav"><button class="active" data-page="home">Beranda</button><button data-page="calc">Kalkulator</button><button data-page="result">Hasil</button><button data-page="dash">Dashboard</button><button data-page="gloss">Glosarium</button></div>
+</header><main id="home" class="page active" style="padding:0;min-height:auto"><div class="hero"><div class="hero-img" style="background-image:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80')"></div><div class="hero-mid"><div><span class="badge">KALKULATOR DIET</span><h1>FitLogic.</h1><p class="sub" style="margin-bottom:26px">Hitung kalori, makronutrisi, target berat, dan arahan diet dalam satu dashboard.</p><button class="btn" onclick="openPage('calc')">Mulai Hitung</button><button class="btn secondary" onclick="openPage('gloss')">Pelajari Istilah</button><div class="quick-cards"><div class="mini"><h3 style="color:var(--primary)">BMI</h3><p class="help">Kategori berat badan</p></div><div class="mini"><h3 style="color:var(--primary)">BMR</h3><p class="help">Kalori dasar tubuh</p></div><div class="mini"><h3 style="color:var(--primary)">TDEE</h3><p class="help">Kebutuhan kalori aktif</p></div></div></div></div><div class="hero-img" style="background-image:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),url('https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=900&q=80')"></div></div><section class="page active" style="display:block;min-height:auto"><h1 class="center">Apa yang FitLogic bantu?</h1><p class="sub center">Hitung kalori, makronutrisi, dan target berat dalam satu dashboard.</p><div class="grid grid-4"><div class="card feature"><div class="icon">📌</div><h2>Target Berat</h2><p class="help">Ada input target berat badan agar sistem tahu user ingin turun, naik, atau maintain.</p></div><div class="card feature"><div class="icon">🔥</div><h2>Target Kalori</h2><p class="help">Kalori dihitung dari BMR, TDEE, aktivitas, dan intensitas program.</p></div><div class="card feature"><div class="icon">🍽️</div><h2>Makronutrisi</h2><p class="help">Protein, karbohidrat, dan lemak dijelaskan dengan bahasa sederhana.</p></div><div class="card feature"><div class="icon">📈</div><h2>Dashboard Aksi</h2><p class="help">Dashboard berisi tren, timeline target, checklist, dan ringkasan keputusan.</p></div></div></section>
+</main><section id="calc" class="page"><h1 class="center">Kalkulator Diet</h1><p class="sub center">Lengkapi data berikut untuk menghitung target diet.</p><div class="grid grid-2"><div class="card shadow"><label>Nama Lengkap</label><input id="name" value="fayadh" autocomplete="name"><div class="input-row"><div><label>Umur <span class="help">tahun</span></label><input id="age" type="number" min="10" max="100" value="21"></div><div><label>Tinggi Badan <span class="help">cm</span></label><input id="height" type="number" min="100" max="230" step="0.1" value="179"></div></div><label>Jenis Kelamin</label><div class="gender-row"><div class="option active" data-gender="male" onclick="selectGender('male')"><div class="bigicon">♂</div><b>Laki-laki</b></div><div class="option" data-gender="female" onclick="selectGender('female')"><div class="bigicon">♀</div><b>Perempuan</b></div></div><div class="input-row"><div><label>Berat Badan Sekarang <span class="help">kg</span></label><input id="weight" type="number" min="25" max="250" step="0.1" value="69" oninput="refreshIntensity()"></div><div><label>Target Berat Badan <span class="help">kg</span></label><input id="targetWeight" type="number" min="25" max="250" step="0.1" value="65" oninput="refreshIntensity()"></div></div><label>Tingkat Aktivitas</label><select id="activity"><option value="1.2">Sedentary - jarang olahraga / banyak duduk</option><option value="1.375">Ringan - olahraga 1 sampai 3 hari per minggu</option><option value="1.55">Sedang - olahraga 3 sampai 5 hari per minggu</option><option value="1.725">Tinggi - olahraga berat / kerja fisik</option></select><p class="help">Kalau ragu, pilih satu tingkat lebih rendah agar target kalori tidak terlalu tinggi.</p><label>Intensitas Program</label><div id="intensityBox" class="intensity-row"></div><p id="goalHelp" class="help"></p><button class="btn full" onclick="calculate()">Hitung Sekarang</button><button class="btn secondary full" onclick="resetForm()">Reset</button></div><div><div class="card sidebox"><h2>Urutan Kerja Sistem</h2><table class="mini-table"><tr><th>Tahap</th><th>Output</th></tr><tr><td>Cek BMI</td><td>Kategori berat badan</td></tr><tr><td>Hitung BMR</td><td>Kalori dasar</td></tr><tr><td>Hitung TDEE</td><td>Kalori aktif harian</td></tr><tr><td>Sesuaikan target</td><td>Turun, naik, atau maintain</td></tr><tr><td>Nilai kecocokan</td><td>Diet Match Score</td></tr></table></div><div class="card sidebox"><h2>Rumus Utama</h2><table class="mini-table"><tr><th>Rumus</th><th>Keterangan</th></tr><tr><td>Pria = 10W + 6.25H - 5A + 5</td><td>BMR laki-laki</td></tr><tr><td>Wanita = 10W + 6.25H - 5A - 161</td><td>BMR perempuan</td></tr><tr><td>TDEE = BMR × Faktor Aktivitas</td><td>Kalori harian aktif</td></tr></table><p class="help">W = berat kg, H = tinggi cm, A = umur.</p></div><div class="card sidebox"><h2>Kategori BMI</h2><table class="mini-table"><tr><th>Kategori</th><th>Nilai BMI</th></tr><tr><td><span class="pill blue">Kurus</span></td><td>&lt; 18.5</td></tr><tr><td><span class="pill green">Normal</span></td><td>18.5 - 24.9</td></tr><tr><td><span class="pill yellow">Gemuk</span></td><td>25 - 29.9</td></tr><tr><td><span class="pill red">Obesitas</span></td><td>≥ 30</td></tr></table></div></div></div>
+</section><section id="result" class="page"><h1 class="center">Hasil Perhitungan</h1><p class="sub center">Lihat target kalori, skor, alasan, dan arahan diet.</p><div id="resultArea" class="noresult"><div class="card"><h2>Belum ada hasil</h2><p class="help">Silakan isi kalkulator terlebih dahulu.</p><button class="btn" onclick="openPage('calc')">Ke Kalkulator</button></div></div>
+</section><section id="dash" class="page"><h1 class="center">Dashboard</h1><p class="sub center">Visualisasi target, tren berat, dan arahan harian.</p><div id="dashArea" class="noresult"><div class="card"><h2>Belum ada dashboard</h2><p class="help">Hitung data di kalkulator terlebih dahulu.</p><button class="btn" onclick="openPage('calc')">Ke Kalkulator</button></div></div>
+</section><section id="gloss" class="page"><h1 class="center">Glosarium Gizi</h1><p class="sub center">Penjelasan singkat mengenai istilah yang digunakan dalam aplikasi.</p><div class="grid grid-3"><div class="card gloss-card"><h3>BMI</h3><b>Body Mass Index</b><p>Indeks massa tubuh. Dipakai untuk melihat kategori berat badan dari tinggi dan berat.</p></div><div class="card gloss-card"><h3>BMR</h3><b>Basal Metabolic Rate</b><p>Kalori dasar yang tetap dibutuhkan tubuh walaupun sedang istirahat total.</p></div><div class="card gloss-card"><h3>TDEE</h3><b>Total Daily Energy Expenditure</b><p>Total kebutuhan kalori harian setelah aktivitas fisik ikut dihitung.</p></div><div class="card gloss-card"><h3>Defisit Kalori</h3><p>Makan lebih sedikit dari TDEE. Digunakan untuk menurunkan berat badan.</p></div><div class="card gloss-card"><h3>Surplus Kalori</h3><p>Makan lebih banyak dari TDEE. Digunakan untuk menaikkan berat badan.</p></div><div class="card gloss-card"><h3>Diet Match Score</h3><p>Skor kecocokan rencana diet. Skor ini menilai target berat, target kalori, BMI target, dan intensitas program.</p></div><div class="card gloss-card"><h3>Protein</h3><p>Zat gizi penting untuk menjaga dan membangun otot. 1 gram protein sekitar 4 kkal.</p></div><div class="card gloss-card"><h3>Karbohidrat</h3><p>Sumber energi utama tubuh. 1 gram karbohidrat sekitar 4 kkal.</p></div><div class="card gloss-card"><h3>Lemak</h3><p>Zat gizi penting untuk hormon dan cadangan energi. 1 gram lemak sekitar 9 kkal.</p></div></div>
+</section><footer class="footer"><div class="logo">FitLogic</div><p>© 2025 FitLogic. Dibuat untuk edukasi. Bukan pengganti konsultasi dokter atau ahli gizi.</p>
+</footer>
+
+<script>
+
+class User {
+  constructor({name, age, gender, height, weight, targetWeight, activity}) {
+    this.name = name || "Pengguna";
+    this.age = age;
+    this.gender = gender;
+    this.height = height;
+    this.weight = weight;
+    this.targetWeight = targetWeight;
+    this.activity = activity;
+  }
+
+  get heightM() {
+    return this.height / 100;
+  }
+
+  get bmi() {
+    return this.weight / (this.heightM * this.heightM);
+  }
+
+  get targetBMI() {
+    return this.targetWeight / (this.heightM * this.heightM);
+  }
+
+  get direction() {
+    if (this.targetWeight < this.weight - 0.5) return "loss";
+    if (this.targetWeight > this.weight + 0.5) return "gain";
+    return "maintain";
+  }
+}
+
+
+
+class CalorieCalculator {
+  constructor(user, intensity) {
+    this.user = user;
+    this.intensity = intensity;
+  }
+
+  calculateBMR() {
+    const u = this.user;
+    if (u.gender === "male") {
+      return (10 * u.weight) + (6.25 * u.height) - (5 * u.age) + 5;
+    }
+    return (10 * u.weight) + (6.25 * u.height) - (5 * u.age) - 161;
+  }
+
+  calculateTDEE(bmr) {
+    return bmr * this.user.activity;
+  }
+
+  getAdjustment() {
+    if (this.user.direction === "loss") return this.intensity === "fast" ? -500 : -250;
+    if (this.user.direction === "gain") return this.intensity === "gainFast" ? 400 : 250;
+    return 0;
+  }
+
+  getProgramLabel() {
+    if (this.user.direction === "loss") {
+      return this.intensity === "fast" ? "Turun Cepat - Defisit 500 kkal" : "Turun Perlahan - Defisit 250 kkal";
+    }
+    if (this.user.direction === "gain") {
+      return this.intensity === "gainFast" ? "Naik Cepat - Surplus 400 kkal" : "Naik Perlahan - Surplus 250 kkal";
+    }
+    return "Maintain - Pertahankan Berat";
+  }
+
+  getDirectionText() {
+    if (this.user.direction === "loss") return "menurunkan berat badan";
+    if (this.user.direction === "gain") return "menaikkan berat badan";
+    return "mempertahankan berat badan";
+  }
+
+  calculate() {
+    const bmr = this.calculateBMR();
+    const tdee = this.calculateTDEE(bmr);
+    const delta = this.getAdjustment();
+    return {
+      bmr: bmr,
+      tdee: tdee,
+      delta: delta,
+      targetCalories: tdee + delta,
+      programLabel: this.getProgramLabel(),
+      directionText: this.getDirectionText()
+    };
+  }
+}
+
+
+
+class MacroRecommendation {
+  constructor(targetCalories, weight, direction) {
+    this.targetCalories = targetCalories;
+    this.weight = weight;
+    this.direction = direction;
+  }
+
+  calculate() {
+    let proteinFactor = this.direction === "loss" ? 1.8 : this.direction === "gain" ? 1.7 : 1.6;
+    let protein = this.weight * proteinFactor;
+    protein = Math.min(protein, this.targetCalories * 0.35 / 4);
+
+    let fat = Math.max(this.weight * 0.6, this.targetCalories * 0.23 / 9);
+    fat = Math.min(fat, this.targetCalories * 0.35 / 9);
+
+    let carbCalories = this.targetCalories - (protein * 4) - (fat * 9);
+
+    if (carbCalories < this.targetCalories * 0.18) {
+      carbCalories = this.targetCalories * 0.22;
+      const remaining = this.targetCalories - carbCalories;
+      protein = Math.min(protein, remaining * 0.58 / 4);
+      fat = Math.max(0, (remaining - protein * 4) / 9);
+    }
+
+    return {
+      protein: Math.max(0, protein),
+      carb: Math.max(0, carbCalories / 4),
+      fat: Math.max(0, fat),
+      proteinCal: Math.max(0, protein * 4),
+      carbCal: Math.max(0, carbCalories),
+      fatCal: Math.max(0, fat * 9)
+    };
+  }
+}
+
+
+
+class DietProgress {
+  constructor(user, intensity) {
+    this.user = user;
+    this.intensity = intensity;
+  }
+
+  getRate() {
+    if (this.user.direction === "loss") return this.intensity === "fast" ? 0.5 : 0.25;
+    if (this.user.direction === "gain") return this.intensity === "gainFast" ? 0.35 : 0.25;
+    return 0;
+  }
+
+  calculate() {
+    const absDiff = Math.abs(this.user.targetWeight - this.user.weight);
+    const rate = this.getRate();
+    return {
+      absDiff: absDiff,
+      rate: rate,
+      estimateWeeks: rate === 0 ? 0 : Math.ceil(absDiff / rate)
+    };
+  }
+
+  static calculateProgressPercent(result, logs) {
+    if (logs && logs.length) {
+      const latest = Number(logs[0].weight);
+      const total = Math.abs(result.targetWeight - result.weight);
+      if (total < 0.1) return 100;
+      const moved = Math.abs(latest - result.weight);
+      return Math.round(Utils.clamp((moved / total) * 100, 0, 100));
+    }
+    return 0;
+  }
+
+  static makeTimeline(result) {
+    if (result.estimateWeeks === 0) {
+      return `<div class="step"><div class="week">Maintain</div><b>Fokus stabil</b><p class="help">Pertahankan berat sekitar ${Utils.one(result.weight)} kg dan pantau setiap minggu.</p></div>`;
+    }
+
+    const steps = [0, 0.25, 0.5, 0.75, 1];
+    return steps.map((progress, index) => {
+      const week = Math.round(result.estimateWeeks * progress);
+      const value = result.weight + (result.targetWeight - result.weight) * progress;
+      const title = index === 0 ? "Mulai" : index === 4 ? "Target" : "Tahap " + index;
+      return `<div class="step"><div class="week">Minggu ${week}</div><b>${title}</b><p class="help">Perkiraan berat: <b>${Utils.one(value)} kg</b></p></div>`;
+    }).join("");
+  }
+
+  static makeTrendSvg(result, logs) {
+    const width = 900, height = 300, padding = 46;
+    let points = [];
+
+    if (logs && logs.length >= 2) {
+      points = [...logs].reverse().map(log => ({label: log.date.slice(5), weight: Number(log.weight)}));
+    } else {
+      const weeks = Math.max(4, Math.min(12, result.estimateWeeks || 4));
+      for (let i = 0; i <= weeks; i++) {
+        points.push({label: "M" + i, weight: result.weight + (result.targetWeight - result.weight) * (i / weeks)});
+      }
+    }
+
+    points.push({label: "Target", weight: result.targetWeight, target: true});
+
+    const values = points.map(p => p.weight);
+    let minValue = Math.min(...values), maxValue = Math.max(...values);
+    const margin = Math.max(1, (maxValue - minValue) * 0.18);
+    minValue -= margin;
+    maxValue += margin;
+
+    const x = i => padding + (width - padding * 2) * (i / (points.length - 1));
+    const y = v => height - padding - (height - padding * 2) * ((v - minValue) / (maxValue - minValue || 1));
+    const line = points.map((p, i) => `${x(i)},${y(p.weight)}`).join(" ");
+
+    const circles = points.map((p, i) => `<circle cx="${x(i)}" cy="${y(p.weight)}" r="${p.target ? 6 : 4}" fill="${p.target ? "#ff4b0b" : "#16a34a"}"></circle>`).join("");
+    const labels = points.map((p, i) => `<text x="${x(i)}" y="${height - 18}" text-anchor="middle" font-size="12" fill="#667085">${p.label}</text>`).join("");
+
+    const grid = [0, 1, 2, 3].map(row => {
+      const yy = padding + row * (height - padding * 2) / 3;
+      const value = maxValue - row * (maxValue - minValue) / 3;
+      return `<line x1="${padding}" y1="${yy}" x2="${width - padding}" y2="${yy}" stroke="#e4e7ec"></line><text x="10" y="${yy + 4}" font-size="12" fill="#667085">${Utils.one(value)}kg</text>`;
+    }).join("");
+
+    return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="100%" preserveAspectRatio="none">
+      ${grid}
+      <polyline points="${line}" fill="none" stroke="#16a34a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <polygon points="${line} ${x(points.length - 1)},${height - padding} ${padding},${height - padding}" fill="rgba(22,163,74,.10)"></polygon>
+      ${circles}
+      ${labels}
+    </svg>`;
+  }
+}
+
+
+
+class DietMatchScore {
+  constructor(result) {
+    this.result = result;
+    this.score = 100;
+    this.good = [];
+    this.bad = [];
+    this.warnings = [];
+    this.healthyMinWeight = 18.5 * Math.pow(result.heightM, 2);
+    this.healthyMaxWeight = 24.9 * Math.pow(result.heightM, 2);
+  }
+
+  evaluateTargetBMI() {
+    if (this.result.targetBMI < 18.5) {
+      this.score -= this.result.targetBMI < 17 ? 65 : 45;
+      this.bad.push(`Target berat membuat BMI target masuk kategori kurus. Untuk tinggi ${this.result.height} cm, target sehat minimal sekitar ${Utils.one(this.healthyMinWeight)} kg.`);
+      this.warnings.push(`Target berat terlalu rendah. Pertimbangkan target minimal sekitar ${Utils.one(this.healthyMinWeight)} kg agar tetap masuk rentang BMI normal.`);
+    } else if (this.result.targetBMI >= 30) {
+      this.score -= 28;
+      this.bad.push("Target berat masih membuat BMI target masuk kategori obesitas. Target bisa dibuat bertahap menuju rentang yang lebih sehat.");
+    } else {
+      this.good.push("BMI target masih berada pada rentang yang lebih aman untuk dijadikan tujuan awal.");
+    }
+  }
+
+  evaluateCalories() {
+    if (this.result.targetCalories < this.result.bmr) {
+      this.score -= this.result.targetCalories < this.result.bmr * 0.9 ? 45 : 32;
+      this.bad.push("Target kalori berada di bawah BMR. Makan di bawah BMR terlalu lama bisa membuat program sulit dijalani.");
+      this.warnings.push("Target kalori di bawah BMR. Pilih intensitas lebih perlahan atau ubah target berat agar lebih realistis.");
+    } else {
+      this.good.push("Target kalori tidak berada di bawah BMR, sehingga lebih aman untuk panduan harian.");
+    }
+  }
+
+  evaluateWeightChange() {
+    const changePercent = this.result.absDiff / this.result.weight;
+
+    if (changePercent > 0.30) {
+      this.score -= 28;
+      this.bad.push("Selisih target berat lebih dari 30% dari berat sekarang. Ini terlalu besar untuk satu tahap program.");
+      this.warnings.push("Target perubahan berat terlalu ekstrem. Buat target bertahap, misalnya 5-10% dari berat saat ini terlebih dahulu.");
+    } else if (changePercent > 0.20) {
+      this.score -= 18;
+      this.bad.push("Selisih target berat lebih dari 20% dari berat sekarang. Sebaiknya program dibuat bertahap.");
+    } else if (changePercent > 0.10) {
+      this.score -= 8;
+      this.good.push("Target cukup menantang, tetapi masih bisa dipantau bertahap.");
+    } else {
+      this.good.push("Selisih target berat tidak terlalu besar, sehingga lebih mudah dipantau.");
+    }
+  }
+
+  evaluateDirection() {
+    if (this.result.direction === "loss" && this.result.bmi < 18.5) {
+      this.score -= 35;
+      this.bad.push("BMI saat ini sudah kurus, sehingga menurunkan berat badan tidak disarankan.");
+    }
+
+    if (this.result.direction === "gain" && this.result.bmi >= 30) {
+      this.score -= 20;
+      this.bad.push("BMI saat ini sudah tinggi, sehingga menaikkan berat badan perlu dipertimbangkan ulang.");
+    }
+
+    if ((this.result.intensity === "fast" || this.result.intensity === "gainFast") && (this.result.absDiff / this.result.weight) > 0.15) {
+      this.score -= 8;
+      this.bad.push("Program cepat untuk target besar cenderung lebih berat. Opsi perlahan biasanya lebih aman.");
+    }
+  }
+
+  getStatus() {
+    if (this.score >= 85) return {label: "Sangat cocok", cls: "green", color: "var(--green)", message: "Rencana ini masuk akal dan aman sebagai panduan awal."};
+    if (this.score >= 70) return {label: "Cocok", cls: "blue", color: "var(--blue)", message: "Rencana cukup baik, tetapi tetap perlu dipantau."};
+    if (this.score >= 50) return {label: "Perlu penyesuaian", cls: "yellow", color: "var(--yellow)", message: "Ada beberapa hal yang sebaiknya diperbaiki agar lebih aman."};
+    return {label: "Tidak disarankan", cls: "red", color: "var(--red)", message: "Target atau kalori terlalu berisiko untuk dijadikan panduan."};
+  }
+
+  calculate() {
+    this.evaluateTargetBMI();
+    this.evaluateCalories();
+    this.evaluateWeightChange();
+    this.evaluateDirection();
+
+    if (this.result.targetBMI < 16 || (this.result.targetBMI < 18.5 && this.result.targetCalories < this.result.bmr)) {
+      this.score = Math.min(this.score, 20);
+    }
+
+    this.score = Math.round(Utils.clamp(this.score, 5, 100));
+
+    return {
+      score: this.score,
+      good: this.good,
+      bad: this.bad,
+      warnings: this.warnings,
+      healthyMinWeight: this.healthyMinWeight,
+      healthyMaxWeight: this.healthyMaxWeight,
+      status: this.getStatus()
+    };
+  }
+}
+
+
+
+class Utils {
+  static fmt(number) {
+    return Math.round(Number(number)).toLocaleString("id-ID");
+  }
+
+  static one(number) {
+    return Number(number).toFixed(1);
+  }
+
+  static clamp(number, min, max) {
+    return Math.max(min, Math.min(max, number));
+  }
+
+  static bmiCategory(bmi) {
+    if (bmi < 18.5) return {label: "Kurus", cls: "blue"};
+    if (bmi < 25) return {label: "Normal", cls: "green"};
+    if (bmi < 30) return {label: "Gemuk", cls: "yellow"};
+    return {label: "Obesitas", cls: "red"};
+  }
+}
+
+
+
+class StorageManager {
+  constructor() {
+    this.resultKey = "fitlogic_oop_result";
+    this.weightLogsKey = "fitlogic_oop_weight_logs";
+  }
+
+  saveResult(result) {
+    localStorage.setItem(this.resultKey, JSON.stringify(result));
+  }
+
+  loadResult() {
+    try {
+      const raw = localStorage.getItem(this.resultKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  loadWeightLogs() {
+    try {
+      return JSON.parse(localStorage.getItem(this.weightLogsKey) || "[]");
+    } catch (error) {
+      return [];
+    }
+  }
+
+  addWeightLog(log) {
+    const logs = this.loadWeightLogs();
+    logs.unshift(log);
+    localStorage.setItem(this.weightLogsKey, JSON.stringify(logs.slice(0, 30)));
+  }
+
+  deleteWeightLog(index) {
+    const logs = this.loadWeightLogs();
+    logs.splice(index, 1);
+    localStorage.setItem(this.weightLogsKey, JSON.stringify(logs));
+  }
+}
+
+
+
+class Dashboard {
+  constructor(app) {
+    this.app = app;
+  }
+
+  macroRow(label, grams, calories, total, color, explain) {
+    const pct = total > 0 ? Utils.clamp((calories / total) * 100, 0, 100) : 0;
+    return `
+      <div class="macro-row">
+        <div class="macro-top"><span>${label}</span><span>${Utils.fmt(grams)}g (${Utils.fmt(calories)} kkal)</span></div>
+        <div class="bar"><div class="fill ${color}" style="width:${pct}%"></div></div>
+        <div class="help">${explain}</div>
+      </div>`;
+  }
+
+  actionAdvice(result) {
+    if (result.score < 50) {
+      if (result.targetBMI < 18.5) return "Target terlalu rendah untuk tinggi badanmu. Naikkan target berat ke rentang normal dulu, lalu gunakan program perlahan.";
+      if (result.targetCalories < result.bmr) return "Target kalori berada di bawah BMR. Pilih intensitas lebih perlahan atau buat target berat lebih dekat.";
+      return "Ubah target menjadi lebih bertahap, lalu hitung ulang.";
+    }
+
+    if (result.direction === "loss") return "Jaga defisit kalori secara konsisten, prioritaskan protein, kurangi minuman manis/gorengan, dan lakukan latihan ringan 3-4 kali seminggu.";
+    if (result.direction === "gain") return "Tambah kalori dari makanan padat nutrisi, prioritaskan protein, dan lakukan latihan beban agar kenaikan lebih banyak menjadi massa otot.";
+    return "Jaga pola makan mendekati TDEE, timbang berat badan rutin, dan pertahankan aktivitas fisik.";
+  }
+
+  renderResult(result) {
+    const area = document.getElementById("resultArea");
+    const warningHtml = result.warnings.length
+      ? `<div class="alert"><b>⚠️ Peringatan Target</b>${result.warnings.join("<br>")}</div>`
+      : result.score >= 70
+        ? `<div class="alert ok"><b>✅ Target cukup masuk akal</b>Target berat dan target kalori masih bisa dijadikan panduan awal.</div>`
+        : `<div class="alert warn"><b>⚠️ Perlu dicek ulang</b>Ada beberapa hal yang perlu disesuaikan agar program lebih nyaman dijalani.</div>`;
+
+    const goodHtml = result.good.map(item => `<div class="reason good">✅ ${item}</div>`).join("");
+    const badHtml = result.bad.map(item => `<div class="reason bad">⚠️ ${item}</div>`).join("");
+    const action = this.actionAdvice(result);
+
+    const breakfast = Math.round(result.targetCalories * 0.25);
+    const lunch = Math.round(result.targetCalories * 0.35);
+    const dinner = Math.round(result.targetCalories * 0.30);
+    const snack = Math.round(result.targetCalories * 0.10);
+
+    area.className = "";
+    area.innerHTML = `
+      ${warningHtml}
+      <div class="result-hero">
+        <div><div class="username">${result.name}</div><span class="pill goal">${result.programLabel}</span></div>
+        <div><div class="calories">${Utils.fmt(result.targetCalories)}</div><b>kkal / hari</b><br><small>Target Kalori</small></div>
+      </div>
+
+      <div class="grid grid-4">
+        <div class="card metric"><div class="label">BMI Sekarang</div><div class="value">${Utils.one(result.bmi)}</div><span class="pill ${result.bmiCat.cls}">${result.bmiCat.label}</span><div class="desc">Kategori berat badan saat ini. Ini indikator awal, bukan diagnosis medis.</div></div>
+        <div class="card metric"><div class="label">BMR</div><div class="value">${Utils.fmt(result.bmr)}</div><span class="unit">kkal/hari istirahat</span><div class="desc">Kalori minimum untuk fungsi dasar tubuh saat istirahat.</div></div>
+        <div class="card metric"><div class="label">TDEE</div><div class="value">${Utils.fmt(result.tdee)}</div><span class="unit">kkal/hari aktif</span><div class="desc">Kalori untuk mempertahankan berat dengan aktivitasmu.</div></div>
+        <div class="card metric" style="border-color:var(--primary)"><div class="label">Target Kalori</div><div class="value">${Utils.fmt(result.targetCalories)}</div><span class="unit">kkal/hari</span><div class="desc">Angka makan harian sesuai target berat dan intensitas program.</div></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:22px">
+        <div class="card shadow">
+          <h2>✨ Kesimpulan & Arahan Diet</h2>
+          <p class="help">Halo <b>${result.name}</b>, BMI kamu saat ini <b>${Utils.one(result.bmi)}</b> dan termasuk kategori <b>${result.bmiCat.label}</b>.</p>
+          <p class="help">Target kamu adalah <b>${result.directionText}</b> dari <b>${Utils.one(result.weight)} kg</b> ke <b>${Utils.one(result.targetWeight)} kg</b>. BMI target menjadi <b>${Utils.one(result.targetBMI)}</b> (${result.targetBmiCat.label}).</p>
+          <p class="help">Target kalori harian yang disarankan sistem adalah <b>${Utils.fmt(result.targetCalories)} kkal</b>. Estimasi waktu jika konsisten sekitar <b>${result.estimateWeeks} minggu</b>.</p>
+          <p class="help"><b>Arahan aksi:</b> ${action}</p>
+        </div>
+
+        <div class="card score-card shadow">
+          <h2>♡ Diet Match Score</h2>
+          <div class="score-ring" style="--score:${result.score};--color:${result.status.color}">
+            <div class="score-inner">${result.score}%</div>
+          </div>
+          <span class="pill ${result.status.cls}">${result.status.label}</span>
+          <p class="help">${result.status.message}</p>
+          <p class="help"><b>Catatan:</b> skor ini bukan nilai kesehatan tubuh, tapi nilai kecocokan rencana diet.</p>
+        </div>
+      </div>
+
+      <div class="card shadow" style="margin-top:22px">
+        <h2>Kenapa skor Diet Match seperti itu?</h2>
+        <p class="help">Sistem mengecek 4 hal: BMI target, target kalori dibanding BMR, besar perubahan berat, dan intensitas program.</p>
+        ${goodHtml}
+        ${badHtml || '<div class="reason good">✅ Tidak ada masalah besar pada target.</div>'}
+      </div>
+
+      <div class="card shadow" style="margin-top:22px">
+        <h2>Pembagian Makronutrisi</h2>
+        ${this.macroRow("Protein", result.protein, result.proteinCal, result.targetCalories, "green", "Fungsi: membantu menjaga dan membangun otot. Usahakan ada lauk protein di setiap makan besar.")}
+        ${this.macroRow("Karbohidrat", result.carb, result.carbCal, result.targetCalories, "orange", "Fungsi: sumber energi utama. Bisa dari nasi, kentang, roti, oat, ubi, atau buah.")}
+        ${this.macroRow("Lemak", result.fat, result.fatCal, result.targetCalories, "purple", "Fungsi: bantu hormon dan metabolisme. Sumbernya bisa telur, ikan, alpukat, kacang, minyak secukupnya.")}
+        <div class="macro-edu">
+          <div class="macro-card"><h3>🥩 Protein</h3><p class="help">Contoh: ayam, ikan, telur, tahu, tempe, daging tanpa lemak, susu/yogurt.</p></div>
+          <div class="macro-card"><h3>🍚 Karbo</h3><p class="help">Contoh: nasi, kentang, ubi, oat, roti gandum, pasta, buah.</p></div>
+          <div class="macro-card"><h3>🥑 Lemak</h3><p class="help">Contoh: kacang, alpukat, kuning telur, ikan berlemak, minyak zaitun secukupnya.</p></div>
+        </div>
+      </div>
+
+      <div class="card shadow" style="margin-top:22px">
+        <h2>🍽️ Contoh Pembagian Menu Harian</h2>
+        <div class="grid grid-4">
+          <div class="menu-card"><b>🍳 Sarapan</b><span class="kcal">${breakfast} kkal</span><p>Nasi/oat/roti + telur/ayam/tahu + buah.</p></div>
+          <div class="menu-card"><b>🍛 Makan Siang</b><span class="kcal">${lunch} kkal</span><p>Nasi/umbi + lauk protein + sayur + sedikit lemak sehat.</p></div>
+          <div class="menu-card"><b>🌙 Makan Malam</b><span class="kcal">${dinner} kkal</span><p>Protein + karbohidrat secukupnya + sayur.</p></div>
+          <div class="menu-card"><b>🍎 Camilan</b><span class="kcal">${snack} kkal</span><p>Buah, yogurt, susu, kacang, atau camilan sehat lain.</p></div>
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:28px">
+        <button class="btn" onclick="openPage('dash')">Lihat Dashboard Aksi</button>
+        <button class="btn secondary" onclick="openPage('calc')">Hitung Ulang</button>
+      </div>`;
+  }
+
+  renderDashboard(result) {
+    const area = document.getElementById("dashArea");
+    const logs = this.app.storage.loadWeightLogs();
+    const donePct = DietProgress.calculateProgressPercent(result, logs);
+    const safeText = result.score >= 70 ? "Aman untuk panduan awal" : result.score >= 50 ? "Perlu dicek ulang" : "Tidak disarankan";
+    const maintDiff = Math.round(result.targetCalories - result.tdee);
+    const svg = DietProgress.makeTrendSvg(result, logs);
+    const timeline = DietProgress.makeTimeline(result);
+
+    area.className = "";
+    area.innerHTML = `
+      <div class="stat-strip">
+        <div class="stat"><small>Keputusan Utama</small><b>${safeText}</b><p class="help">${result.status.message}</p></div>
+        <div class="stat"><small>Target Berat</small><b>${Utils.one(result.weight)} → ${Utils.one(result.targetWeight)} kg</b><p class="help">${result.directionText}</p></div>
+        <div class="stat"><small>Target Kalori</small><b>${Utils.fmt(result.targetCalories)} kkal</b><p class="help">${maintDiff >= 0 ? "+" : ""}${Utils.fmt(maintDiff)} dari TDEE</p></div>
+        <div class="stat"><small>Estimasi</small><b>${result.estimateWeeks} minggu</b><p class="help">perkiraan jika konsisten</p></div>
+      </div>
+
+      <div class="card shadow" style="margin-bottom:22px">
+        <div class="chart-title-row">
+          <div><h2>Ringkasan Target Berat</h2><p class="help">Bagian ini menunjukkan arah perubahan berat badan. Grafik akan memakai jurnal berat jika sudah ada, kalau belum maka menampilkan simulasi target.</p></div>
+          <span class="pill ${result.status.cls}">Diet Match ${result.score}%</span>
+        </div>
+        <div class="progress-track"><div class="fill ${result.direction === "gain" ? "blue" : "green"}" style="width:${donePct}%"></div></div>
+        <p class="help">Progress menuju target: <b>${donePct}%</b>. Catat berat badan di bawah agar progress lebih nyata.</p>
+        <div class="svgbox">${svg}</div>
+      </div>
+
+      <div class="grid grid-2-even">
+        <div class="card shadow">
+          <h2>Breakdown Kalori</h2>
+          <p class="help">BMR adalah batas dasar tubuh, TDEE adalah kalori maintain, sedangkan target adalah angka yang kamu ikuti.</p>
+          <div class="rowline"><span>BMR</span><b>${Utils.fmt(result.bmr)} kkal</b></div>
+          <div class="rowline"><span>TDEE / Maintain</span><b>${Utils.fmt(result.tdee)} kkal</b></div>
+          <div class="rowline"><span>Target Harian</span><b>${Utils.fmt(result.targetCalories)} kkal</b></div>
+          <div class="rowline"><span>Perubahan dari TDEE</span><b>${maintDiff >= 0 ? "+" : ""}${Utils.fmt(maintDiff)} kkal</b></div>
+          <div class="reason ${result.targetCalories < result.bmr ? "bad" : "good"}">${result.targetCalories < result.bmr ? "⚠️ Target kalori di bawah BMR, lebih baik diperbaiki." : "✅ Target kalori masih di atas BMR, lebih aman untuk panduan awal."}</div>
+        </div>
+
+        <div class="card shadow">
+          <h2>Makro Nutrisi Harian</h2>
+          <p class="help">Jangan hafalkan angka saja. Gunakan ini sebagai komposisi piring harian.</p>
+          <div class="rowline"><span>Protein</span><b>${Utils.fmt(result.protein)}g/hari</b></div>
+          <div class="rowline"><span>Karbohidrat</span><b>${Utils.fmt(result.carb)}g/hari</b></div>
+          <div class="rowline"><span>Lemak</span><b>${Utils.fmt(result.fat)}g/hari</b></div>
+          <div class="simple-box" style="margin-top:14px"><b>Saran:</b><p class="help">Setiap makan besar usahakan ada 1 sumber protein, 1 sumber karbohidrat, dan sayur. Lemak cukup dari minyak masak, telur, kacang, ikan, atau alpukat.</p></div>
+        </div>
+      </div>
+
+      <div class="card shadow" style="margin-top:22px">
+        <h2>Timeline Program</h2>
+        <p class="help">Timeline ini membantu melihat program sebagai perjalanan bertahap, bukan hanya angka target akhir.</p>
+        <div class="timeline">${timeline}</div>
+      </div>
+
+      <div class="grid grid-2-even" style="margin-top:22px">
+        <div class="card shadow">
+          <h2>Checklist Harian</h2>
+          <p class="help">Ini bagian yang paling praktis untuk dilakukan setelah melihat hasil.</p>
+          <div class="checklist">${this.dailyChecklist(result)}</div>
+        </div>
+
+        <div class="card shadow">
+          <h2>Hal yang Perlu Dipantau</h2>
+          <p class="help">Kalau salah satu poin ini terasa bermasalah, target sebaiknya dihitung ulang.</p>
+          <div class="checklist">
+            <div class="checkitem"><span class="check">1</span><div><b>Berat badan mingguan</b><div class="help">Naik/turun terlalu cepat berarti target kalori perlu disesuaikan.</div></div></div>
+            <div class="checkitem"><span class="check">2</span><div><b>Energi harian</b><div class="help">Kalau terlalu lemas, defisit mungkin terlalu besar.</div></div></div>
+            <div class="checkitem"><span class="check">3</span><div><b>Konsistensi protein</b><div class="help">Protein membantu menjaga otot, terutama saat menurunkan berat badan.</div></div></div>
+            <div class="checkitem"><span class="check">4</span><div><b>Aktivitas fisik</b><div class="help">Olahraga 3-4 kali seminggu lebih baik daripada hanya mengurangi makan.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow journal">
+        <h2>📈 Jurnal Progres Berat Badan</h2>
+        <p class="help">Catat berat badan secara rutin. Setelah ada beberapa data, grafik tren akan mengikuti catatan asli, bukan simulasi.</p>
+        <div class="journal-form">
+          <div><label>Berat Badan (kg)</label><input id="logWeight" type="number" step="0.1" value="${result.weight}"></div>
+          <div><label>Tanggal</label><input id="logDate" type="date" value="${new Date().toISOString().slice(0, 10)}"></div>
+          <button class="btn" onclick="addWeightLog()">Catat Berat</button>
+        </div>
+        <div id="journalTable"></div>
+      </div>`;
+
+    this.renderJournalTable(result);
+  }
+
+  dailyChecklist(result) {
+    const items = [];
+    items.push(`<div class="checkitem"><span class="check">✓</span><div><b>Makan mendekati ${Utils.fmt(result.targetCalories)} kkal</b><div class="help">Tidak harus tepat 100%, tapi usahakan mendekati target harian.</div></div></div>`);
+    items.push(`<div class="checkitem"><span class="check">✓</span><div><b>Protein sekitar ${Utils.fmt(result.protein)}g/hari</b><div class="help">Bagi ke 2-4 waktu makan agar lebih mudah tercapai.</div></div></div>`);
+
+    if (result.direction === "loss") {
+      items.push(`<div class="checkitem"><span class="check">✓</span><div><b>Kurangi kalori cair dan gorengan</b><div class="help">Minuman manis sering membuat defisit gagal tanpa terasa.</div></div></div>`);
+    } else if (result.direction === "gain") {
+      items.push(`<div class="checkitem"><span class="check">✓</span><div><b>Tambah makanan padat nutrisi</b><div class="help">Contoh: susu, telur, kacang, alpukat, nasi, oat, ayam, tempe.</div></div></div>`);
+    } else {
+      items.push(`<div class="checkitem"><span class="check">✓</span><div><b>Jaga porsi stabil</b><div class="help">Fokus pada konsistensi agar berat tidak naik/turun jauh.</div></div></div>`);
+    }
+
+    items.push(`<div class="checkitem"><span class="check">✓</span><div><b>Catat berat 1-2 kali per minggu</b><div class="help">Jangan menilai dari satu hari saja, lihat tren beberapa minggu.</div></div></div>`);
+    return items.join("");
+  }
+
+  renderJournalTable(result) {
+    const target = document.getElementById("journalTable");
+    if (!target) return;
+
+    const logs = this.app.storage.loadWeightLogs();
+
+    if (!logs.length) {
+      target.innerHTML = '<p class="help">Belum ada jurnal. Tambahkan catatan berat badan terlebih dahulu.</p>';
+      return;
+    }
+
+    const rows = logs.map((log, index) => {
+      const bmi = Number(log.weight) / Math.pow(result.heightM, 2);
+      const category = Utils.bmiCategory(bmi);
+      return `<tr>
+        <td>${log.date}</td>
+        <td>${Utils.one(log.weight)} kg</td>
+        <td>${Utils.one(bmi)}</td>
+        <td><span class="pill ${category.cls}">${category.label}</span></td>
+        <td><button class="delete" onclick="deleteLog(${index})">hapus</button></td>
+      </tr>`;
+    }).join("");
+
+    target.innerHTML = `<table>
+      <thead><tr><th>Tanggal</th><th>Berat</th><th>BMI</th><th>Kategori</th><th>Aksi</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+}
+
+
+
+class FitLogicApp {
+  constructor() {
+    this.gender = "male";
+    this.intensity = "slow";
+    this.storage = new StorageManager();
+    this.dashboard = new Dashboard(this);
+  }
+
+  init() {
+    document.querySelectorAll(".nav button").forEach(button => {
+      button.addEventListener("click", () => this.openPage(button.dataset.page));
+    });
+
+    this.refreshIntensity();
+
+    const saved = this.storage.loadResult();
+    if (saved) {
+      this.dashboard.renderResult(saved);
+      this.dashboard.renderDashboard(saved);
+    }
+  }
+
+  openPage(page) {
+    document.querySelectorAll(".page").forEach(element => element.classList.remove("active"));
+
+    const target = document.getElementById(page);
+    if (target) target.classList.add("active");
+
+    document.querySelectorAll(".nav button").forEach(button => {
+      button.classList.toggle("active", button.dataset.page === page);
+    });
+
+    window.scrollTo(0, 0);
+
+    if (page === "result" || page === "dash") {
+      const saved = this.storage.loadResult();
+      if (saved) {
+        this.dashboard.renderResult(saved);
+        this.dashboard.renderDashboard(saved);
+      }
+    }
+  }
+
+  selectGender(gender) {
+    this.gender = gender;
+    document.querySelectorAll("[data-gender]").forEach(element => {
+      element.classList.toggle("active", element.dataset.gender === gender);
+    });
+  }
+
+  getNumber(id, label, min, max) {
+    const value = Number(document.getElementById(id).value);
+
+    if (!Number.isFinite(value)) throw new Error(label + " harus berupa angka.");
+    if (value < min || value > max) throw new Error(label + " sebaiknya berada pada rentang " + min + " sampai " + max + ".");
+
+    return value;
+  }
+
+  getInputUser() {
+    return new User({
+      name: document.getElementById("name").value.trim() || "Pengguna",
+      age: this.getNumber("age", "Umur", 10, 100),
+      gender: this.gender,
+      height: this.getNumber("height", "Tinggi badan", 100, 230),
+      weight: this.getNumber("weight", "Berat badan", 25, 250),
+      targetWeight: this.getNumber("targetWeight", "Target berat badan", 25, 250),
+      activity: Number(document.getElementById("activity").value)
+    });
+  }
+
+  refreshIntensity() {
+    const weight = Number(document.getElementById("weight").value);
+    const targetWeight = Number(document.getElementById("targetWeight").value);
+    const box = document.getElementById("intensityBox");
+    const help = document.getElementById("goalHelp");
+
+    if (!Number.isFinite(weight) || !Number.isFinite(targetWeight) || weight <= 0 || targetWeight <= 0) {
+      box.innerHTML = "";
+      help.textContent = "Isi berat sekarang dan target berat badan terlebih dahulu.";
+      return;
+    }
+
+    const direction = new User({
+      name: "",
+      age: 20,
+      gender: this.gender,
+      height: 170,
+      weight: weight,
+      targetWeight: targetWeight,
+      activity: 1.2
+    }).direction;
+
+    if (direction === "loss") {
+      if (["gainSlow", "gainFast", "maintain"].includes(this.intensity)) this.intensity = "slow";
+
+      box.innerHTML = `
+        <div class="option ${this.intensity === "slow" ? "active" : ""}" onclick="selectIntensity('slow')">
+          <div class="bigicon">↘</div><b>Turun Perlahan</b><small>Defisit ±250 kkal/hari</small>
+        </div>
+        <div class="option ${this.intensity === "fast" ? "active" : ""}" onclick="selectIntensity('fast')">
+          <div class="bigicon">🔥</div><b>Turun Cepat</b><small>Defisit ±500 kkal/hari</small>
+        </div>`;
+      help.textContent = "Target berat lebih rendah, jadi sistem membaca tujuanmu sebagai menurunkan berat badan.";
+      return;
+    }
+
+    if (direction === "gain") {
+      if (["slow", "fast", "maintain"].includes(this.intensity)) this.intensity = "gainSlow";
+
+      box.innerHTML = `
+        <div class="option ${this.intensity === "gainSlow" ? "active" : ""}" onclick="selectIntensity('gainSlow')">
+          <div class="bigicon">↗</div><b>Naik Perlahan</b><small>Surplus ±250 kkal/hari</small>
+        </div>
+        <div class="option ${this.intensity === "gainFast" ? "active" : ""}" onclick="selectIntensity('gainFast')">
+          <div class="bigicon">⚡</div><b>Naik Cepat</b><small>Surplus ±400 kkal/hari</small>
+        </div>`;
+      help.textContent = "Target berat lebih tinggi, jadi sistem membaca tujuanmu sebagai menaikkan berat badan.";
+      return;
+    }
+
+    this.intensity = "maintain";
+    box.innerHTML = `
+      <div class="option active" style="grid-column:1/-1" onclick="selectIntensity('maintain')">
+        <div class="bigicon">⚖️</div><b>Maintain</b><small>Target kalori mendekati TDEE</small>
+      </div>`;
+    help.textContent = "Target berat hampir sama dengan berat sekarang, jadi sistem membaca tujuanmu sebagai mempertahankan berat badan.";
+  }
+
+  selectIntensity(value) {
+    this.intensity = value;
+    this.refreshIntensity();
+  }
+
+  resetForm() {
+    document.getElementById("name").value = "fayadh";
+    document.getElementById("age").value = 21;
+    document.getElementById("height").value = 179;
+    document.getElementById("weight").value = 69;
+    document.getElementById("targetWeight").value = 65;
+    document.getElementById("activity").value = "1.2";
+    this.selectGender("male");
+    this.intensity = "slow";
+    this.refreshIntensity();
+  }
+
+  calculate() {
+    try {
+      const user = this.getInputUser();
+      if (user.direction === "maintain") this.intensity = "maintain";
+
+      const calories = new CalorieCalculator(user, this.intensity).calculate();
+      const progress = new DietProgress(user, this.intensity).calculate();
+      const macros = new MacroRecommendation(calories.targetCalories, user.weight, user.direction).calculate();
+
+      const baseResult = {
+        name: user.name,
+        age: user.age,
+        gender: user.gender,
+        height: user.height,
+        weight: user.weight,
+        targetWeight: user.targetWeight,
+        activity: user.activity,
+        heightM: user.heightM,
+        direction: user.direction,
+        bmi: user.bmi,
+        targetBMI: user.targetBMI,
+        bmr: calories.bmr,
+        tdee: calories.tdee,
+        targetCalories: calories.targetCalories,
+        delta: calories.delta,
+        rate: progress.rate,
+        absDiff: progress.absDiff,
+        estimateWeeks: progress.estimateWeeks,
+        intensity: this.intensity,
+        programLabel: calories.programLabel,
+        directionText: calories.directionText,
+        ...macros
+      };
+
+      const scoreResult = new DietMatchScore(baseResult).calculate();
+
+      const finalResult = {
+        ...baseResult,
+        ...scoreResult,
+        bmiCat: Utils.bmiCategory(baseResult.bmi),
+        targetBmiCat: Utils.bmiCategory(baseResult.targetBMI),
+        date: new Date().toISOString().slice(0, 10)
+      };
+
+      this.storage.saveResult(finalResult);
+      this.dashboard.renderResult(finalResult);
+      this.dashboard.renderDashboard(finalResult);
+      this.openPage("result");
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  addWeightLog() {
+    const result = this.storage.loadResult();
+    if (!result) return;
+
+    const weight = Number(document.getElementById("logWeight").value);
+    const date = document.getElementById("logDate").value;
+
+    if (!Number.isFinite(weight) || weight <= 0 || !date) {
+      alert("Isi berat badan dan tanggal terlebih dahulu.");
+      return;
+    }
+
+    this.storage.addWeightLog({date, weight});
+    this.dashboard.renderDashboard(result);
+  }
+
+  deleteLog(index) {
+    const result = this.storage.loadResult();
+    this.storage.deleteWeightLog(index);
+    if (result) this.dashboard.renderDashboard(result);
+  }
+}
+
+
+
+const fitLogicApp = new FitLogicApp();
+fitLogicApp.init();
+
+function openPage(page) { fitLogicApp.openPage(page); }
+function selectGender(gender) { fitLogicApp.selectGender(gender); }
+function refreshIntensity() { fitLogicApp.refreshIntensity(); }
+function selectIntensity(value) { fitLogicApp.selectIntensity(value); }
+function calculate() { fitLogicApp.calculate(); }
+function resetForm() { fitLogicApp.resetForm(); }
+function addWeightLog() { fitLogicApp.addWeightLog(); }
+function deleteLog(index) { fitLogicApp.deleteLog(index); }
+
+</script>
+</body>
+</html>
